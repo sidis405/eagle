@@ -1,0 +1,68 @@
+application: Acme
+psr4: 'app/Acme'
+processed: false
+dependencies: 
+    flash: 
+        enabled: true
+        repo: 'laracasts/flash'
+    html:
+        enabled: true
+        repo: 'illuminate/html'
+    presenter:
+        enabled: true
+        repo: 'laracasts/presenter'
+    debugbar:
+        enabled: true
+        repo: 'barryvdh/laravel-debugbar' 
+    glide: 
+        enabled: true
+        repo: 'league/glide'
+    medialibrary:
+        enabled: true
+        repo: 'spatie/laravel-medialibrary'
+entities:
+      - name: Activities
+        processed: false
+        model: true
+        migration: true
+        scaffold: true
+        presentable: true
+        media: true
+        repository: true
+        commands: true
+        events: true
+        controller: true
+        routes: true
+        admin:
+            enabled: true
+            scaffold: true
+      - name: Staff
+        processed: false
+        model: true
+        migration: true
+        scaffold: true
+        presentable: true
+        media: false
+        repository: true
+        commands: true
+        events: true
+        controller: true
+        routes: true
+        admin:
+            enabled: true
+            scaffold: true
+      - name: Pages
+        processed: false
+        model: true
+        migration: true
+        scaffold: true
+        presentable: true
+        media: true
+        repository: true
+        commands: true
+        events: true
+        controller: true
+        routes: true
+        admin:
+            enabled: true
+            scaffold: true
