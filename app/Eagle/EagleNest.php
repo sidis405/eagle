@@ -12,6 +12,16 @@ class EagleNest {
         file_put_contents($this->path, $this->stub);
     }
 
+    public function setNamespace()
+    {
+        $this->stub = $this->replaceInStub('__NAMESPACE__', $this->namespace, $this->stub);
+    }
+
+    public function setModelName()
+    {
+        $this->stub = $this->replaceInStub('__MODELNAME__', $this->entity->name,  $this->stub);
+    }
+
     public function getStub($name)
     {
         $filename = base_path().'/app/Eagle/Stubs/' . $name . '.stub';
@@ -26,6 +36,11 @@ class EagleNest {
 
         return $stub;
 
+    }
+
+    public function replaceInStub($search, $replace, $stub)
+    {
+        return str_replace($search, $replace,  $stub);
     }
 
     

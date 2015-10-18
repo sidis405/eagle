@@ -2,6 +2,7 @@
 
 namespace App\Eagle;
 
+use App\Eagle\EaglePresenters;
 use Exception;
 
 class EagleModels extends EagleNest{
@@ -18,18 +19,15 @@ class EagleModels extends EagleNest{
         $this->stub = $this->getStub('Model');
         $this->path = base_path().'/app/'.$this->namespace.'/Models/'.$this->entity->name.'.php';
 
-        $this->setModelName();
+        $this->setModelName($this->entity->name,  $this->stub);
 
         $this->setNameSpace();
 
         $this->setImports();
         $this->setFactory();
 
-        // Account for __FACTORY__ thus commands
-        // MAKE PRESENTER FILE
-        logger($this->stub);
         
-        // $this->writeFile();
+        $this->writeFile();
 
         return $this->stub;
 
@@ -44,7 +42,7 @@ class EagleModels extends EagleNest{
             $factory = '';
         }
 
-        $this->stub = str_replace('__FACTORY__', $factory,  $this->stub);
+        $this->stub = $this->replaceInStub('__FACTORY__', $factory,  $this->stub);
     }
 
     
@@ -59,18 +57,14 @@ class EagleModels extends EagleNest{
         list($imports, $traits, $presenter) = $this->setPresenterImports($imports, $traits, $presenter);
         list($imports, $traits, $implements) = $this->setMediaImports($imports, $traits, $implements);
 
-        $this->stub = str_replace('__IMPORTS__', join('',$imports),  $this->stub);
-        $this->stub = str_replace('__IMPLEMENTS__', $implements,  $this->stub);
-        $this->stub = str_replace('__PRESENTER__', $presenter,  $this->stub);
+        $this->stub = $this->replaceInStub('__IMPORTS__', join('',$imports),  $this->stub);
+        $this->stub = $this->replaceInStub('__IMPLEMENTS__', $implements,  $this->stub);
+        $this->stub = $this->replaceInStub('__PRESENTER__', $presenter,  $this->stub);
 
-        $this->stub = str_replace('__TRAITS__', join(', ', $traits), $this->stub);
+        $this->stub = $this->replaceInStub('__TRAITS__', join(', ', $traits), $this->stub);
 
     }
 
-    public function setModelName()
-    {
-        $this->stub = str_replace('__MODELNAME__', $this->entity->name,  $this->stub);
-    }
 
     public function setPresenterImports($imports, $traits, $presenter)
     {
@@ -79,7 +73,8 @@ class EagleModels extends EagleNest{
 
             $traits[] = 'PresentableTrait';
 
-            
+            $eagle_presenter = new EaglePresenters;
+            $eagle_presenter->makePresenter($this->entity, $this->namespace);
 
             $presenter = "protected \$presenter = '" .$this->namespace. "\Presenters\\" . $this->entity->name . "Presenter';";
         }else{
@@ -107,17 +102,7 @@ class EagleModels extends EagleNest{
         return [$imports, $traits, $implements];
     }
 
-    public function setNamespace()
-    {
-        $namespace = $this->namespace . '\Models';
-
-        $this->stub = str_replace('__NAMESPACE__', $namespace, $this->stub);
-
-    }
-
-    
-
-
+   
 
 }
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace __NAMESPACE__;
+namespace __NAMESPACE__\Models;
 
 use Illuminate\Database\Eloquent\Model;
 __IMPORTS__

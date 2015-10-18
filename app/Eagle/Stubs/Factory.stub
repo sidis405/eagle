@@ -1,6 +1,6 @@
 public static function make($myeField)
     {
-        $item = new static(compact('myeField'));
+        $item = new static(compact('myField'));
 
         return $item;
     }

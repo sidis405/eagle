@@ -5,6 +5,7 @@ namespace App\Eagle;
 use Symfony\Component\Yaml\Yaml;
 use Exception;
 use App\Eagle\EagleModels;
+use App\Eagle\EagleRepos;
 
 class Eagle {
 
@@ -17,6 +18,7 @@ class Eagle {
         $this->config = $this->getConfig();
         $this->namespace = $this->config->application;
         $this->models = new EagleModels;
+        $this->repos = new EagleRepos;
     }
 
     public function getConfig()
@@ -94,29 +96,17 @@ class Eagle {
     {
         $out = 'Processing entity "' . $entity->name . '"';
         $out.= '<br>' . $this->models->makeModel($entity, $this->namespace);
+        $out.= '<br>' . $this->repos->makeRepo($entity, $this->namespace);
         return $out;
     }
 
-    // public function makeModel($entity)
-    // {
-    //     if($entity->migration){
-    //         $command = 'php artisan make:model ' . $this->namespace . '/Models/' . $entity->name . ' -m';
-    //     }else{
-    //         $command = 'php artisan make:model ' . $this->namespace . '/Models/' . $entity->name;
-    //     }
-    //     return 'Will run ' . $command;
-    //     //Dont forget presentable and migration
-    // }
 
     // public function makeScaffold($entity)
     // {
         
     // }
 
-    // public function makeRepo($entity)
-    // {
-        
-    // }
+
 
     // public function makeCommand($entity)
     // {
