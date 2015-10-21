@@ -28,6 +28,7 @@ class Eagle extends EagleNest{
         $this->events = new EagleEvents;
         $this->controllers = new EagleControllers;
         $this->admin_controllers = new EagleAdminControllers;
+        $this->routes = new EagleRoutes;
     }
 
     public function getConfig()
@@ -109,6 +110,7 @@ class Eagle extends EagleNest{
         $this->events->makeEvent($entity, $this->namespace);
         $this->controllers->makeController($entity, $this->namespace);
         $this->admin_controllers->makeController($entity, $this->namespace);
+        $this->routes->makeRoutes($entity, $this->namespace);
 
     }
 
@@ -126,22 +128,5 @@ class Eagle extends EagleNest{
         
     // }
     // 
-    
-
-    // public function makeRoutes($entity)
-    // {
-        
-    // }
-    // 
-    //  // public function makeMigrations($entity)
-    // {
-        
-    // }
-
-    // public function makeAdminScaffold($entity)
-    // {
-        
-    // }
-
 }
 

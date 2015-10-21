@@ -12,7 +12,7 @@ class EagleAdminControllers extends EagleNest {
     public function makeController($entity, $namespace)
     {
 
-        if($entity->controller){
+        if($entity->controller && $entity->admin->enabled){
             
                 $this->stub = $this->getStub('AdminController');
                 $this->entity = $entity;
