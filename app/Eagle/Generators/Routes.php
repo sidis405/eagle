@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Eagle;
-use App\Eagle\EagleUtils;
+namespace App\Eagle\Generators;
+use App\Eagle\Nest;
+use App\Eagle\Utils;
 
-class EagleRoutes extends EagleNest {
+class Routes extends Nest {
 
     protected $stub;
     protected $entity;
@@ -39,7 +40,7 @@ class EagleRoutes extends EagleNest {
 
                 $this->setNamespace();
                 $this->setModelName();
-                $this->writeFile();
+                $this->writeFile(false);
                 $this->bag('Wrote route file for : ' .$entity->name);
                 
 
@@ -56,10 +57,10 @@ class EagleRoutes extends EagleNest {
         {
             $this->stub = $this->getStub('routes');
             $this->path = $filepath;
-            $this->writeFile();
+            $this->writeFile(false);
         }
 
-        return true;
+        return false;
 
     }
 

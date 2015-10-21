@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Eagle;
-use App\Eagle\EagleUtils;
+namespace App\Eagle\Generators;
+use App\Eagle\Nest;
+use App\Eagle\Generators\Utils;
 
-class EagleEvents extends EagleNest {
+class Events extends Nest {
 
     protected $stub;
     protected $entity;
@@ -24,7 +25,7 @@ class EagleEvents extends EagleNest {
                 $this->stub = $this->getStub('Event');
                 $this->entity = $entity;
                 $this->namespace = $namespace;
-                $this->path = base_path().'/app/'.$this->namespace.'/Events/'.$this->entity->name.'/'.EagleUtils::singularize($this->entity->name).'Was'.$type.'d.php';
+                $this->path = base_path().'/app/'.$this->namespace.'/Events/'.$this->entity->name.'/'.Utils::singularize($this->entity->name).'Was'.$type.'d.php';
                 $this->setNamespace();
                 $this->setModelName();
                 $this->setModelInstance();

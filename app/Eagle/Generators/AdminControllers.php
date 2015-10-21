@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Eagle;
+namespace App\Eagle\Generators;
 
-class EagleAdminControllers extends EagleNest {
+use App\Eagle\Nest;
+
+class AdminControllers extends Nest {
 
     protected $stub;
     protected $entity;

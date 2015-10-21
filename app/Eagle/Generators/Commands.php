@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Eagle;
-use App\Eagle\EagleUtils;
+namespace App\Eagle\Generators;
 
-class EagleCommands extends EagleNest {
+use App\Eagle\Nest;
+use App\Eagle\Generators\Utils;
+
+class Commands extends Nest {
 
     protected $stub;
     protected $entity;
@@ -22,7 +24,7 @@ class EagleCommands extends EagleNest {
                 $this->stub = $this->getStub('Commands/'.$type.'Command');
                 $this->entity = $entity;
                 $this->namespace = $namespace;
-                $this->path = base_path().'/app/'.$this->namespace.'/Commands/'.$this->entity->name.'/'.$type.EagleUtils::singularize($this->entity->name).'Command.php';
+                $this->path = base_path().'/app/'.$this->namespace.'/Commands/'.$this->entity->name.'/'.$type.Utils::singularize($this->entity->name).'Command.php';
                 $this->setNamespace();
                 $this->setModelName();
                 $this->setModelInstance();

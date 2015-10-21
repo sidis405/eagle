@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Eagle;
+namespace APP\Eagle\Generators;
 
-use App\Eagle\EaglePresenters;
+use App\Eagle\Nest;
+use App\Eagle\Generators\Presenters;
 use Exception;
 
-class EagleModels extends EagleNest{
+class Models extends Nest{
 
     protected $namespace;
     protected $entity;
@@ -135,7 +136,7 @@ class EagleModels extends EagleNest{
 
             $traits[] = 'PresentableTrait';
 
-            $eagle_presenter = new EaglePresenters;
+            $eagle_presenter = new Presenters;
             $eagle_presenter->makePresenter($this->entity, $this->namespace);
 
             $presenter = "protected \$presenter = '" .$this->namespace. "\Presenters\\" . $this->entity->name . "Presenter';";

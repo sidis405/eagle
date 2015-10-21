@@ -1,9 +1,10 @@
 <?php
 
 namespace App\Eagle;
+use App\Eagle\Generators\Utils;
 use Exception;
 
-class EagleNest {
+class Nest {
 
     public $write;
 
@@ -48,14 +49,14 @@ class EagleNest {
 
     public function setModelInstance($lowercase = false)
     {
-        $this->bag('Setting model instance to: ' .EagleUtils::singularize($this->entity->name));
+        $this->bag('Setting model instance to: ' .Utils::singularize($this->entity->name));
         if($lowercase){
-            $this->stub = $this->replaceInStub('__MODELINSTANCE__', strtolower(EagleUtils::singularize($this->entity->name)),  $this->stub);    
+            $this->stub = $this->replaceInStub('__MODELINSTANCE__', strtolower(Utils::singularize($this->entity->name)),  $this->stub);    
         }else{
-            $this->stub = $this->replaceInStub('__MODELINSTANCE__', EagleUtils::singularize($this->entity->name),  $this->stub);
+            $this->stub = $this->replaceInStub('__MODELINSTANCE__', Utils::singularize($this->entity->name),  $this->stub);
         }
 
-        $this->stub = $this->replaceInStub('__MODELINSTANCE_L__', strtolower(EagleUtils::singularize($this->entity->name)),  $this->stub);    
+        $this->stub = $this->replaceInStub('__MODELINSTANCE_L__', strtolower(Utils::singularize($this->entity->name)),  $this->stub);    
         
     }
 

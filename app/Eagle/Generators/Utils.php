@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Eagle;
+namespace App\Eagle\Generators;
 
-class EagleUtils {
+class Utils {
     
 
     public static function singularize ($params)

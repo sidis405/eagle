@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Eagle;
-use App\Eagle\EagleUtils;
+namespace App\Eagle\Generators;
 
-class EagleRepos extends EagleNest {
+use App\Eagle\Nest;
+
+
+class Repos extends Nest {
 
     protected $stub;
     protected $entity;

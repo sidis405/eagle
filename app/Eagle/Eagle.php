@@ -2,15 +2,12 @@
 
 namespace App\Eagle;
 
-use App\Eagle\EagleModels;
-use App\Eagle\EagleRepos;
-use App\Eagle\EagleCommands;
-use App\Eagle\EagleCommandHandlers;
+use App\Eagle\Nest;
 use Exception;
 use Symfony\Component\Yaml\Yaml;
 
 
-class Eagle extends EagleNest{
+class Eagle extends Nest{
 
     protected $application_filename = 'application.yml';
     public $config;
@@ -21,14 +18,14 @@ class Eagle extends EagleNest{
         \Session::flush();
         $this->config = $this->getConfig();
         $this->namespace = $this->config->application;
-        $this->models = new EagleModels;
-        $this->repos = new EagleRepos;
-        $this->commands = new EagleCommands;
-        $this->handlers = new EagleCommandHandlers;
-        $this->events = new EagleEvents;
-        $this->controllers = new EagleControllers;
-        $this->admin_controllers = new EagleAdminControllers;
-        $this->routes = new EagleRoutes;
+        $this->models = new Generators\Models;
+        $this->repos = new Generators\Repos;
+        $this->commands = new Generators\Commands;
+        $this->handlers = new Generators\CommandHandlers;
+        $this->events = new Generators\Events;
+        $this->controllers = new Generators\Controllers;
+        $this->admin_controllers = new Generators\AdminControllers;
+        $this->routes = new Generators\Routes;
     }
 
     public function getConfig()

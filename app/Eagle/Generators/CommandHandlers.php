@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Eagle;
-use App\Eagle\EagleUtils;
+namespace App\Eagle\Generators;
+use App\Eagle\Nest;
+use App\Eagle\Generators\Utils;
 
 
-class EagleCommandHandlers extends EagleNest {
+class CommandHandlers extends Nest {
 
     protected $stub;
     protected $entity;
@@ -34,7 +35,7 @@ class EagleCommandHandlers extends EagleNest {
                 $this->stub = $this->getStub('Commands/'.$this->type.'CommandHandler');
                 $this->entity = $entity;
                 $this->namespace = $namespace;
-                $this->path = base_path().'/app/'.$this->namespace.'/Handlers/Commands/'.$this->entity->name.'/'.$this->type.EagleUtils::singularize($this->entity->name).'CommandHandler.php';
+                $this->path = base_path().'/app/'.$this->namespace.'/Handlers/Commands/'.$this->entity->name.'/'.$this->type.Utils::singularize($this->entity->name).'CommandHandler.php';
                 $this->setImports();
                 $this->setConstructor();
                 $this->setEventable();
