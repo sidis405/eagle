@@ -25,6 +25,7 @@ class Eagle extends EagleNest{
         $this->repos = new EagleRepos;
         $this->commands = new EagleCommands;
         $this->handlers = new EagleCommandHandlers;
+        $this->events = new EagleEvents;
     }
 
     public function getConfig()
@@ -99,6 +100,7 @@ class Eagle extends EagleNest{
         $this->repos->makeRepo($entity, $this->namespace);
         $this->commands->makeCommand($entity, $this->namespace);
         $this->handlers->makeHandler($entity, $this->namespace);
+        $this->events->makeEvent($entity, $this->namespace);
 
     }
 
@@ -108,30 +110,22 @@ class Eagle extends EagleNest{
         
     // }
 
-
-
-    // public function makeCommand($entity)
-    // {
-    //     //make basecommand
-    //     //make Bus Service provider
-    // }
-
-    // public function makeBaseCommand($entity)
-    // {
-        
-    // }
-
-    // public function makeEvents($entity)
-    // {
-        
-    // }
-
     // public function makeController($entity)
+    // {
+        
+    // }
+    // 
+    // // public function makeRequests($entity)
     // {
         
     // }
 
     // public function makeRoutes($entity)
+    // {
+        
+    // }
+    // 
+    //  // public function makeMigrations($entity)
     // {
         
     // }

@@ -6,13 +6,16 @@ use __NAMESPACE__\Commands\Command;
 
 class Update__MODELINSTANCE__Command extends Command
 {
+
+    __FIELDSLISTPARAMS__
+
     /**
-     * Create a new command instance.
+     * Update a command instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(__FIELDSLIST__)
     {
-        //
+        __FIELDSLISTSINGLES__
     }
 }

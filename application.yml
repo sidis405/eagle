@@ -21,9 +21,14 @@ dependencies:
         enabled: true
         repo: 'spatie/laravel-medialibrary'
 entities:
-      - name: Activities
+      - name: Albums
         processed: false
         model: true
+        relationships:
+          - type: hasMany
+            model: Photos
+            key1: album_id
+            key2: 
         migration: true
         scaffold: true
         presentable: true
@@ -32,28 +37,45 @@ entities:
         commands: true
         events: true
         controller: true
+        requests: true
         routes: true
         admin:
             enabled: true
             scaffold: true
-      - name: Staff
+        fields:
+            - name: name
+              type: string
+              nullable: false
+              default: false
+              default_value: false
+            - name: slug
+              type: string
+              nullable: false
+              default: false
+              default_value: false
+            - name: title
+              type: string
+              nullable: false
+              default: false
+              default_value: false
+            - name: description
+              type: string
+              nullable: true
+              default: false
+              default_value: false
+            - name: featured_photo_id
+              type: integer
+              nullable: true
+              default: true
+              default_value: false
+      - name: Photos
         processed: false
         model: true
-        migration: true
-        scaffold: true
-        presentable: true
-        media: false
-        repository: true
-        commands: true
-        events: true
-        controller: true
-        routes: true
-        admin:
-            enabled: true
-            scaffold: true
-      - name: Pages
-        processed: false
-        model: true
+        relationships:
+          - type: belongsTo
+            model: Albums
+            key1: album_id
+            key2: 
         migration: true
         scaffold: true
         presentable: true
@@ -62,7 +84,20 @@ entities:
         commands: true
         events: true
         controller: true
+        requests: true
         routes: true
         admin:
             enabled: true
             scaffold: true
+        fields:
+            - name: path
+              type: string
+              nullable: false
+              default: false
+              default_value: false
+            - name: album_id
+              type: integer
+              nullable: false
+              default: false
+              default_value: false
+

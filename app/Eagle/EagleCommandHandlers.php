@@ -11,34 +11,40 @@ class EagleCommandHandlers extends EagleNest {
     protected $path;
     protected $namespace;
     protected $types = ['Create', 'Update'];
-    protected $imports;
     protected $construct;
     protected $persister;
     protected $eventable;
+    protected $tyoe;
 
     public function makeHandler($entity, $namespace)
     {
 
         if($entity->commands)
         {
+            $this->setupCommandSystem();
+            $this->bag('ADD : App\Providers\BusServiceProvider::class to config/app.php');
 
             foreach($this->types as $type){
 
-                $this->imports = [];
                 $this->construct = '';
                 $this->construct = '';
                 $this->eventable = '';
+                $this->type = $type;
 
-                $this->stub = $this->getStub('Commands/'.$type.'CommandHandler');
+                $this->stub = $this->getStub('Commands/'.$this->type.'CommandHandler');
                 $this->entity = $entity;
                 $this->namespace = $namespace;
-                $this->path = base_path().'/app/'.$this->namespace.'/Handlers/Commands/'.$this->entity->name.'/'.$type.$this->entity->name.'CommandHandler.php';
-                $this->setNamespace();
+                $this->path = base_path().'/app/'.$this->namespace.'/Handlers/Commands/'.$this->entity->name.'/'.$this->type.EagleUtils::singularize($this->entity->name).'CommandHandler.php';
+                $this->setImports();
+                $this->setConstructor();
+                $this->setEventable();
+                $this->setPersister();
+                $this->stub = $this->replaceInStub('__FIELDSLISFROMCOMMAND__', $this->makeFieldListSinglesFromCommand('command'),  $this->stub);
                 $this->setModelName();
                 $this->setModelInstance();
-                $this->setImports();
-                $this->writeFile();
-                $this->bag('Created ' .$type. ' Handler for : ' .$entity->name);
+                $this->setNameSpace();
+                $this->writeFile(false);
+                $this->bag('Created ' .$this->type. ' Handler for : ' .$entity->name);
 
 
             }
@@ -46,26 +52,95 @@ class EagleCommandHandlers extends EagleNest {
 
     }
 
-
     public function setImports()
     {
-        if($this->entity->repository){
-            $imports[] = 'use __NAMESPACE__\Presenter\PresentableTrait;'. PHP_EOL;;
+        $imports = [];
 
-            $traits[] = 'PresentableTrait';
-
-            $eagle_presenter = new EaglePresenters;
-            $eagle_presenter->makePresenter($this->entity, $this->namespace);
-
-            $presenter = "protected \$presenter = '" .$this->namespace. "\Presenters\\" . $this->entity->name . "Presenter';";
-        }else{
-            $presenter = '';
+        if($this->entity->repository)
+        {
+            $imports[] = 'use __NAMESPACE__\Repositories\__MODELNAME__Repo;'. PHP_EOL;
         }
 
-        $this->bag('Handled model presenter for: ' .$this->entity->name);
+        if($this->entity->events)
+        {
+            $imports[] = "use __NAMESPACE__\Events\__MODELNAME__\__MODELINSTANCE__Was{$this->type}d;". PHP_EOL;
+            $imports[] = "use Events;". PHP_EOL;
+        }
 
-        return [$imports, $traits, $presenter];
+        $this->stub = $this->replaceInStub('__IMPORTS__', join('', $imports),  $this->stub);
 
     }
+
+    public function setConstructor()
+    {
+        $stub = [];
+
+        if($this->entity->repository)
+        {   
+            $stub = $this->getStub('Commands/CommandHandlerConstructorWithRepo');
+        } else {
+            $stub = $this->getStub('Commands/CommandHandlerConstructor');
+        }
+
+        $this->stub = $this->replaceInStub('__CONSTRUCT__', $stub,  $this->stub);
+
+    }
+
+    public function setEventable()
+    {
+        $eventable = [];
+
+        if($this->entity->events)
+        {   
+            $eventable = "Event::fire(new __MODELINSTANCE__Was".$this->type."d(\$__MODELINSTANCE_L__));";
+        } else {
+            $eventable = '';
+        }
+
+        $this->stub = $this->replaceInStub('__EVENTABLE__', $eventable,  $this->stub);
+
+    }
+
+    public function setPersister()
+    {
+        $persister = [];
+
+        if($this->entity->repository)
+        {   
+            $eventable = "\$__MODELINSTANCE_L__ = \$this->repo->save(\$__MODELINSTANCE_L___object);";
+        } else {
+            $eventable = "\$__MODELINSTANCE_L__ = \$__MODELINSTANCE_L___object->save();";
+        }
+
+        $this->stub = $this->replaceInStub('__PERSISTING__', $eventable,  $this->stub);
+
+    }
+
+    public function setupCommandSystem()
+    {
+        $this->makeBaseCommand();
+        $this->makeBusServiceProvider();
+    }
+
+    public function makeBusServiceProvider()
+    {
+        $this->stub = $this->getStub('Commands/BaseCommand');
+
+        $this->path = base_path().'/app/'.$this->namespace.'/Commands/Command.php';
+
+        $this->writeFile(false);
+    }
+
+    public function makeBaseCommand()
+    {
+        $this->stub = $this->getStub('Commands/BusServiceProvider');
+
+        $this->path = base_path().'/app/Providers/BusServiceProvider.php';
+
+        $this->setNameSpace();
+
+        $this->writeFile(false);
+    }
+
 
 }

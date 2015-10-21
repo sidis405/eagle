@@ -1,15 +1,15 @@
-public static function make($myeField)
+public static function make(__FIELDSLIST__)
     {
-        $item = new static(compact('myField'));
+        $item = new static(compact(__FIELDSCOMPACT__));
 
         return $item;
     }
 
-    public static function edit($item_id, $myField)
+    public static function edit($item_id, __FIELDSLIST__)
     {
         $item = static::find($item_id);
 
-        $item->myField = $myField;
+        __FIELDSLISTSINGLES__
 
         return $item;
     }

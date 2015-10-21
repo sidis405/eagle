@@ -7,15 +7,15 @@ use __NAMESPACE__\Commands\Command;
 class Create__MODELINSTANCE__Command extends Command
 {
 
-    public $myField;
+    __FIELDSLISTPARAMS__
 
     /**
      * Create a new command instance.
      *
      * @return void
      */
-    public function __construct($myField)
+    public function __construct(__FIELDSLIST__)
     {
-        $this->myField = $myField;
+        __FIELDSLISTSINGLES__
     }
 }

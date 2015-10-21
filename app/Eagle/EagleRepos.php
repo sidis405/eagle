@@ -25,7 +25,7 @@ class EagleRepos extends EagleNest {
             $this->setRepoSave();
             $this->setModelName();
             $this->setModelInstance(true);
-            $this->writeFile();
+            $this->writeFile(false);
         }
 
         

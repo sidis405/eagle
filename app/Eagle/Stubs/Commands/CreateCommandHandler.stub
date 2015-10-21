@@ -19,7 +19,9 @@ class Create__MODELINSTANCE__CommandHandler
      */
     public function handle(Create__MODELINSTANCE__Command $command)
     {
-        $__MODELINSTANCE_L___object = __MODELNAME__::make($command->myField);
+        $__MODELINSTANCE_L___object = __MODELNAME__::make(
+            __FIELDSLISFROMCOMMAND__
+            );
 
         __PERSISTING__
 

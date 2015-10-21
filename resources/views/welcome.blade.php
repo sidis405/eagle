@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Laravel</title>
+        <title>Eagle App Maker</title>
 
         <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
 
@@ -31,14 +31,19 @@
             }
 
             .title {
-                font-size: 96px;
+                font-size: 126px;
+            }
+
+            a {
+                text-decoration: none;
+                color: inherit;
             }
         </style>
     </head>
     <body>
         <div class="container">
             <div class="content">
-                <div class="title">Laravel 5</div>
+                <div class="title"><a href="/install">fly</a></div>
             </div>
         </div>
     </body>

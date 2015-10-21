@@ -21,6 +21,8 @@ class EagleModels extends EagleNest{
 
         $this->setModelName($this->entity->name,  $this->stub);
 
+        $this->setRelationships();
+
         $this->setNameSpace();
 
         $this->setImports();
@@ -30,6 +32,21 @@ class EagleModels extends EagleNest{
         $this->writeFile();
 
         return $this->stub;
+
+    }
+
+    public function setRelationships()
+    {
+        $relations = '';
+        
+        foreach($this->entity->relationships as $rel)
+        {
+            $relations .= 'public function ' . strtolower($rel->model) . '(){' .PHP_EOL.PHP_EOL;
+            $relations .= '        return $this->' . $rel->type . '(\'__NAMESPACE__\Models\\' . $rel->model. '\', \'' . $rel->key1 . '\');' . PHP_EOL.PHP_EOL;
+            $relations .= '    }' . PHP_EOL.PHP_EOL.PHP_EOL;
+
+            $this->stub = $this->replaceInStub('__RELATIONSHIPS__', $relations,  $this->stub);
+        }
 
     }
 
@@ -45,6 +62,48 @@ class EagleModels extends EagleNest{
         $this->bag('Created factory for: ' .$this->entity->name);
 
         $this->stub = $this->replaceInStub('__FACTORY__', $factory,  $this->stub);
+        $this->stub = $this->replaceInStub('__FIELDSLIST__', $this->makeFieldList(),  $this->stub);
+        $this->stub = $this->replaceInStub('__FIELDSCOMPACT__', $this->makeFieldListCompact(),  $this->stub);
+        $this->stub = $this->replaceInStub('__FIELDSLISTSINGLES__', $this->makeFieldListSingles(),  $this->stub);
+    }
+
+    public function makeFieldList()
+    {
+        $fields = [];
+
+        foreach($this->entity->fields as $field)
+        {
+            $pieces = explode(':', $field->name);
+            $fields[] = $pieces[0];
+        }
+
+        return '$'.join(', $', $fields);
+    }
+
+    public function makeFieldListCompact()
+    {
+        $fields = [];
+
+        foreach($this->entity->fields as $field)
+        {
+            $pieces = explode(':', $field->name);
+            $fields[] = $pieces[0];
+        }
+
+        return '\''.join("', '", $fields).'\'';
+    }
+
+    public function makeFieldListSingles($item_name = 'item')
+    {
+        $fields = [];
+
+        foreach($this->entity->fields as $field)
+        {
+            $pieces = explode(':', $field->name);
+            $fields[] = '$'.$item_name .'->'. $pieces[0] . ' = $' . $pieces[0] .';';
+        }
+
+        return join($fields, PHP_EOL.'        ');
     }
 
     
@@ -92,8 +151,8 @@ class EagleModels extends EagleNest{
     public function setMediaImports($imports, $traits, $implements)
     {
         if($this->entity->media){
-            $imports[] = 'use Spatie\MediaLibrary\HasMedia\HasMediaTrait;'. PHP_EOL;;
-            $imports[] = 'use Spatie\MediaLibrary\HasMedia\Interfaces\HasMedia;'. PHP_EOL;;
+            $imports[] = 'use Spatie\MediaLibrary\HasMedia\HasMediaTrait;'. PHP_EOL;
+            $imports[] = 'use Spatie\MediaLibrary\HasMedia\Interfaces\HasMedia;'. PHP_EOL;
 
             $traits[] = 'HasMediaTrait';
 

@@ -17,7 +17,7 @@ class EaglePresenters extends EagleNest {
         $this->path = base_path().'/app/'.$this->namespace.'/Presenters/'.$this->entity->name.'Presenter.php';
         $this->setNamespace();
         $this->setModelName();
-        $this->writeFile();
+        $this->writeFile(false);
 
     }
 

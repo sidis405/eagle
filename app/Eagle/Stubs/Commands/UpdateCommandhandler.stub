@@ -19,7 +19,10 @@ class Update__MODELINSTANCE__CommandHandler
      */
     public function handle(Create__MODELINSTANCE__Command $command)
     {
-         $__MODELINSTANCE_L___object = __MODELNAME__::save($command->myField);
+        $__MODELINSTANCE_L___object = __MODELNAME__::edit(
+            $command->id,
+            __FIELDSLISFROMCOMMAND__
+            );
 
         __PERSISTING__
 

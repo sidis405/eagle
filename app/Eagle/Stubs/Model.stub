@@ -12,4 +12,6 @@ class __MODELNAME__ extends Model __IMPLEMENTS__
     __PRESENTER__
 
     __FACTORY__
+
+    __RELATIONSHIPS__
 }
