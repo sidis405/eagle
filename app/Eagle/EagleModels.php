@@ -42,6 +42,8 @@ class EagleModels extends EagleNest{
             $factory = '';
         }
 
+        $this->bag('Created factory for: ' .$this->entity->name);
+
         $this->stub = $this->replaceInStub('__FACTORY__', $factory,  $this->stub);
     }
 
@@ -63,6 +65,7 @@ class EagleModels extends EagleNest{
 
         $this->stub = $this->replaceInStub('__TRAITS__', join(', ', $traits), $this->stub);
 
+
     }
 
 
@@ -81,6 +84,7 @@ class EagleModels extends EagleNest{
             $presenter = '';
         }
 
+        $this->bag('Handled model presenter for: ' .$this->entity->name);
 
         return [$imports, $traits, $presenter];
     }
@@ -98,6 +102,7 @@ class EagleModels extends EagleNest{
             $implements = '';
         }
 
+        $this->bag('Handled model media for: ' .$this->entity->name);
 
         return [$imports, $traits, $implements];
     }

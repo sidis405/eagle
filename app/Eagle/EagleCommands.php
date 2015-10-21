@@ -3,44 +3,36 @@
 namespace App\Eagle;
 use App\Eagle\EagleUtils;
 
-class EagleRepos extends EagleNest {
+class EagleCommands extends EagleNest {
 
     protected $stub;
     protected $entity;
     protected $path;
     protected $namespace;
+    protected $types = ['Create', 'Update'];
 
     public function makeCommand($entity, $namespace)
     {
 
-        $this->stub = $this->getStub('Command');
-        $this->entity = $entity;
-
-        if($this->entity->repository)
+        if($entity->commands)
         {
-            $this->namespace = $namespace;
-            $this->path = base_path().'/app/'.$this->namespace.'/Repositories/'.$this->entity->name.'Repo.php';
-            $this->setNamespace();
-            $this->setRepoSave();
-            $this->setModelName();
-            $this->writeFile();
+
+            foreach($this->types as $type){
+
+                $this->stub = $this->getStub('Commands/'.$type.'Command');
+                $this->entity = $entity;
+                $this->namespace = $namespace;
+                $this->path = base_path().'/app/'.$this->namespace.'/Commands/'.$this->entity->name.'/'.$type.$this->entity->name.'Command.php';
+                $this->setNamespace();
+                $this->setModelName();
+                $this->setModelInstance();
+                $this->writeFile();
+                $this->bag('Created ' .$type. ' Command for : ' .$entity->name);
+                
+
+            }
         }
 
-        
-
-    }
-
-    public function setRepoSave()
-    {
-        if($this->entity->commands){
-            $factory = $this->getStub('RepoSave');
-        }else{
-            $factory = '';
-        }
-
-        $factory = $this->replaceInStub('__MODELINSTANCE__', strtolower(EagleUtils::singularize($this->entity->name)), $factory);
-
-        $this->stub = $this->replaceInStub('__REPOSAVE__', $factory,  $this->stub);
     }
 
 }

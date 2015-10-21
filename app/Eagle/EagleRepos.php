@@ -18,11 +18,13 @@ class EagleRepos extends EagleNest {
 
         if($this->entity->repository)
         {
+            $this->bag('Created Repository for : ' .$this->entity->name);
             $this->namespace = $namespace;
             $this->path = base_path().'/app/'.$this->namespace.'/Repositories/'.$this->entity->name.'Repo.php';
             $this->setNamespace();
             $this->setRepoSave();
             $this->setModelName();
+            $this->setModelInstance(true);
             $this->writeFile();
         }
 
@@ -38,7 +40,7 @@ class EagleRepos extends EagleNest {
             $factory = '';
         }
 
-        $factory = $this->replaceInStub('__MODELINSTANCE__', strtolower(EagleUtils::singularize($this->entity->name)), $factory);
+        $this->bag('Handled repo  for : ' .$this->entity->name);
 
         $this->stub = $this->replaceInStub('__REPOSAVE__', $factory,  $this->stub);
     }

@@ -2,12 +2,15 @@
 
 namespace App\Eagle;
 
-use Symfony\Component\Yaml\Yaml;
-use Exception;
 use App\Eagle\EagleModels;
 use App\Eagle\EagleRepos;
+use App\Eagle\EagleCommands;
+use App\Eagle\EagleCommandHandlers;
+use Exception;
+use Symfony\Component\Yaml\Yaml;
 
-class Eagle {
+
+class Eagle extends EagleNest{
 
     protected $application_filename = 'application.yml';
     public $config;
@@ -15,10 +18,13 @@ class Eagle {
 
     public function __construct()
     {
+        \Session::flush();
         $this->config = $this->getConfig();
         $this->namespace = $this->config->application;
         $this->models = new EagleModels;
         $this->repos = new EagleRepos;
+        $this->commands = new EagleCommands;
+        $this->handlers = new EagleCommandHandlers;
     }
 
     public function getConfig()
@@ -40,26 +46,22 @@ class Eagle {
 
     public function build()
     {
-        $out = '';
-
         if($this->config->processed) return 'Application has already been built. Set processed:true to re-build again.';
 
 
-       $out.= '<br>' . $this->handleAppDir();
-       $out.= '<br>' . $this->installDependencies();
-       $out.= '<br>' . $this->handleEntities();
+       $this->handleAppDir();
+       $this->installDependencies();
+       $this->handleEntities();
 
-       return $out;
+       return \Session::get('current_stream');;
     }
 
     public function handleAppDir()
     {
-        $out = '';
-        $out.= '<br>' . 'Namespace of app has been set to: ' . $this->namespace;
-        $out.= '<br>' . 'Will create dir app/' . $this->config->application;
-        $out.= '<br>' . 'Add to composer.json "'.$this->namespace.'\\\":"'.$this->config->psr4.'"';
+        $this->bag('Namespace of app has been set to: ' . $this->namespace);
+        $this->bag('Will create dir app/' . $this->config->application);
+        $this->bag('Add to composer.json "'.$this->namespace.'\\\":"'.$this->config->psr4.'"');
 
-        return $out;
     }
 
     public function installDependencies()
@@ -71,33 +73,33 @@ class Eagle {
             }
         }
 
-        return 'will run "composer require ' .join(' ', $deps).'"';
+        $this->bag('will run "composer require ' .join(' ', $deps).'"');
 
     }
 
     function handleEntities()
     {
-        $out = '';
 
         foreach($this->config->entities as $entity)
         {
             if( $entity->processed )
             {
-                $out.= '<br>' . 'Entity "'.$entity->name.'" has alredy been processed. Skipping.';
+                $this->bag('Entity "'.$entity->name.'" has alredy been processed. Skipping.');
             }else{
-                $out.= '<br>' . $this->processEntity($entity);
+                $this->processEntity($entity);
             }
         }
 
-        return $out;
     }
 
     public function processEntity($entity)
     {
-        $out = 'Processing entity "' . $entity->name . '"';
-        $out.= '<br>' . $this->models->makeModel($entity, $this->namespace);
-        $out.= '<br>' . $this->repos->makeRepo($entity, $this->namespace);
-        return $out;
+        $this->bag('Processing entity "' . $entity->name . '"');
+        $this->models->makeModel($entity, $this->namespace);
+        $this->repos->makeRepo($entity, $this->namespace);
+        $this->commands->makeCommand($entity, $this->namespace);
+        $this->handlers->makeHandler($entity, $this->namespace);
+
     }
 
 
