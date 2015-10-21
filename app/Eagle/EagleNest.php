@@ -7,6 +7,7 @@ class EagleNest {
 
     public $write;
 
+
     public function writeFile($write = true)
     {
         if($write){
@@ -16,7 +17,12 @@ class EagleNest {
             file_put_contents($this->path, $this->stub);
 
             $this->bag('WROTE FILE : ' .$this->path);
+
+            $this->incrementFileCount();
+
+
         }
+
 
     }
 
@@ -30,6 +36,8 @@ class EagleNest {
     {
         $this->bag('Setting modelname to : ' .$this->entity->name);
         $this->stub = $this->replaceInStub('__MODELNAME__', $this->entity->name,  $this->stub);
+
+        $this->stub = $this->replaceInStub('__MODELNAME_L__', strtolower($this->entity->name),  $this->stub);    
     }
 
     public function setEventType()
@@ -80,6 +88,12 @@ class EagleNest {
         $current_stream[] = $message;
 
         \Session::put('current_stream', $current_stream);
+    }
+
+    public function incrementFileCount()
+    {
+
+        \Session::put('fileCount', \Session::get('fileCount') +1);
     }
 
     public function makeFieldList()

@@ -29,7 +29,7 @@ class EagleModels extends EagleNest{
         $this->setFactory();
 
         
-        $this->writeFile();
+        $this->writeFile(false);
 
         return $this->stub;
 

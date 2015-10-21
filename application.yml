@@ -5,21 +5,33 @@ dependencies:
     flash: 
         enabled: true
         repo: 'laracasts/flash'
+        provider: flash_provider
+        alias: flash_alias
     html:
         enabled: true
         repo: 'illuminate/html'
+        provider: html_provider
+        alias: html_alias
     presenter:
         enabled: true
         repo: 'laracasts/presenter'
+        provider: presenter_provider
+        alias: presenter_alias
     debugbar:
         enabled: true
         repo: 'barryvdh/laravel-debugbar' 
+        provider: debugbar_provider
+        alias: debugbar_alias
     glide: 
         enabled: true
         repo: 'league/glide'
+        provider: glide_provider
+        alias: glide_alias
     medialibrary:
         enabled: true
         repo: 'spatie/laravel-medialibrary'
+        provider: medialibrary_provider
+        alias: medialibrary_alias
 entities:
       - name: Albums
         processed: false
@@ -38,10 +50,10 @@ entities:
         events: true
         controller: true
         requests: true
-        routes: true
         admin:
             enabled: true
             scaffold: true
+        routes: true
         fields:
             - name: name
               type: string
@@ -85,10 +97,10 @@ entities:
         events: true
         controller: true
         requests: true
-        routes: true
         admin:
             enabled: true
             scaffold: true
+        routes: true
         fields:
             - name: path
               type: string

@@ -26,6 +26,8 @@ class Eagle extends EagleNest{
         $this->commands = new EagleCommands;
         $this->handlers = new EagleCommandHandlers;
         $this->events = new EagleEvents;
+        $this->controllers = new EagleControllers;
+        $this->admin_controllers = new EagleAdminControllers;
     }
 
     public function getConfig()
@@ -53,6 +55,10 @@ class Eagle extends EagleNest{
        $this->handleAppDir();
        $this->installDependencies();
        $this->handleEntities();
+
+       $time = microtime(true) - $_SERVER["REQUEST_TIME_FLOAT"];
+
+       $this->bag('Wrote ' . \Session::get('fileCount') .' files in ' . $time . ' seconds.');
 
        return \Session::get('current_stream');;
     }
@@ -101,24 +107,26 @@ class Eagle extends EagleNest{
         $this->commands->makeCommand($entity, $this->namespace);
         $this->handlers->makeHandler($entity, $this->namespace);
         $this->events->makeEvent($entity, $this->namespace);
+        $this->controllers->makeController($entity, $this->namespace);
+        $this->admin_controllers->makeController($entity, $this->namespace);
 
     }
 
 
+
+    
+    
     // public function makeScaffold($entity)
     // {
         
     // }
-
-    // public function makeController($entity)
+    // 
+    // // public function makeAdminScaffold($entity)
     // {
         
     // }
     // 
-    // // public function makeRequests($entity)
-    // {
-        
-    // }
+    
 
     // public function makeRoutes($entity)
     // {
@@ -130,7 +138,7 @@ class Eagle extends EagleNest{
         
     // }
 
-    // public function makeAdmin($entity)
+    // public function makeAdminScaffold($entity)
     // {
         
     // }
