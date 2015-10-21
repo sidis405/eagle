@@ -1,4 +1,4 @@
-<h3>Step 1 : App info</h3>
+<h3>Step 1 : App info <i class="mdi-action-info-outline mdi-material-teal" style="font-size: 20pt;"></i></h3>
 <hr>
 
         <legend>Name and namespace</legend>

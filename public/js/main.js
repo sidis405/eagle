@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    var current = 0;
+    var current = 1;
     
     widget      = $(".step");
     btnnext     = $(".next");
