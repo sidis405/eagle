@@ -9,7 +9,7 @@
 
 
     <div class="step well">@include('eagle.steps.1-name-and-deps')</div>
-    <div class="step well">Step 2</div>
+    <div class="step well">@include('eagle.steps.2-entities')</div>
     <div class="step well">Step 3</div>
     <div class="step well">Step 4</div>
     <div class="step well">Step 5</div>
