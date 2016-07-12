@@ -30,7 +30,7 @@ class Models extends Nest{
         $this->setFactory();
 
         
-        $this->writeFile(false);
+        $this->writeFile(true);
 
         return $this->stub;
 

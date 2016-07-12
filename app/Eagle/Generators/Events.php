@@ -30,7 +30,7 @@ class Events extends Nest {
                 $this->setModelName();
                 $this->setModelInstance();
                 $this->setEventType();
-                $this->writeFile(false);
+                $this->writeFile(true);
                 $this->bag('Created ' .$type. ' Event for : ' .$entity->name);
                 
 

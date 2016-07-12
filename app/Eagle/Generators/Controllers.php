@@ -27,7 +27,7 @@ class Controllers extends Nest {
                 $this->setNamespace();
                 $this->setModelName();
                 $this->setModelInstance(true);
-                $this->writeFile(false);
+                $this->writeFile(true);
                 $this->bag('Created Controller for : ' .$this->entity->name);
         }
     }

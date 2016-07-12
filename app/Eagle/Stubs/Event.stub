@@ -2,8 +2,8 @@
 
 namespace __NAMESPACE__\Events\__MODELNAME__;
 
-use __NAMESPACE__\Events\Event;
-use __NAMESPACE__\Acam\Models\__MODELNAME__;
+use Event;
+use __NAMESPACE__\Models\__MODELNAME__;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 

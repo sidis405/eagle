@@ -44,7 +44,7 @@ class CommandHandlers extends Nest {
                 $this->setModelName();
                 $this->setModelInstance();
                 $this->setNameSpace();
-                $this->writeFile(false);
+                $this->writeFile(true);
                 $this->bag('Created ' .$this->type. ' Handler for : ' .$entity->name);
 
 
@@ -65,7 +65,7 @@ class CommandHandlers extends Nest {
         if($this->entity->events)
         {
             $imports[] = "use __NAMESPACE__\Events\__MODELNAME__\__MODELINSTANCE__Was{$this->type}d;". PHP_EOL;
-            $imports[] = "use Events;". PHP_EOL;
+            $imports[] = "use Event;". PHP_EOL;
         }
 
         $this->stub = $this->replaceInStub('__IMPORTS__', join('', $imports),  $this->stub);
@@ -129,7 +129,7 @@ class CommandHandlers extends Nest {
 
         $this->path = base_path().'/app/'.$this->namespace.'/Commands/Command.php';
 
-        $this->writeFile(false);
+        $this->writeFile(true);
     }
 
     public function makeBaseCommand()
@@ -140,7 +140,7 @@ class CommandHandlers extends Nest {
 
         $this->setNameSpace();
 
-        $this->writeFile(false);
+        $this->writeFile(true);
     }
 
 

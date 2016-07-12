@@ -40,7 +40,7 @@ class Routes extends Nest {
 
                 $this->setNamespace();
                 $this->setModelName();
-                $this->writeFile(false);
+                $this->writeFile(true);
                 $this->bag('Wrote route file for : ' .$entity->name);
                 
 
@@ -57,7 +57,7 @@ class Routes extends Nest {
         {
             $this->stub = $this->getStub('routes');
             $this->path = $filepath;
-            $this->writeFile(false);
+            $this->writeFile(true);
         }
 
         return false;

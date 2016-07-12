@@ -1,6 +1,6 @@
 <?php
 
-namespace __NAMESPACE__\Commands;
+namespace __NAMESPACE__\Commands\__MODELINSTANCE__;
 
 use __NAMESPACE__\Commands\Command;
 

@@ -19,7 +19,7 @@ class Presenters extends Nest {
         $this->path = base_path().'/app/'.$this->namespace.'/Presenters/'.$this->entity->name.'Presenter.php';
         $this->setNamespace();
         $this->setModelName();
-        $this->writeFile(false);
+        $this->writeFile(true);
 
     }
 

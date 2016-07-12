@@ -19,7 +19,7 @@ class AdminControllers extends Nest {
                 $this->stub = $this->getStub('AdminController');
                 $this->entity = $entity;
                 $this->namespace = $namespace;
-                $this->path = base_path().'/app/'.$this->namespace.'/Http/Controllers/Admin/'.$this->entity->name.'Controller.php';
+                $this->path = base_path().'/app/'.$this->namespace.'/Http/Controllers/admin/'.$this->entity->name.'Controller.php';
                 $this->setImports();
                 $this->setDependencies();
                 $this->setFetchers();
@@ -28,7 +28,7 @@ class AdminControllers extends Nest {
                 $this->setNamespace();
                 $this->setModelName();
                 $this->setModelInstance();
-                $this->writeFile(false);
+                $this->writeFile(true);
         }
     }
 

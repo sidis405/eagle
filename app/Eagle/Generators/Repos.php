@@ -27,7 +27,7 @@ class Repos extends Nest {
             $this->setRepoSave();
             $this->setModelName();
             $this->setModelInstance(true);
-            $this->writeFile(false);
+            $this->writeFile(true);
         }
 
         

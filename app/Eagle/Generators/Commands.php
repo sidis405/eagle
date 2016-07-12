@@ -31,7 +31,7 @@ class Commands extends Nest {
                 $this->stub = $this->replaceInStub('__FIELDSLIST__', $this->makeFieldList(),  $this->stub);
                 $this->stub = $this->replaceInStub('__FIELDSLISTSINGLES__', $this->makeFieldListSingles('this'),  $this->stub);
                 $this->stub = $this->replaceInStub('__FIELDSLISTPARAMS__', $this->makeFieldListParams('public'),  $this->stub);
-                $this->writeFile(false);
+                $this->writeFile(true);
                 $this->bag('Created ' .$type. ' Command for : ' .$entity->name);
                 
 
